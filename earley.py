@@ -1,3 +1,5 @@
+'''earley.py'''
+
 import re
 
 dot = chr(8226)# •
@@ -8,8 +10,6 @@ nonterminals = set(['P', 'S', 'M', 'T'])
 parts_of_speech = ['+','*']
 for i in range(1,5):
 	parts_of_speech.append(str(i))
-
-#print("parts_of_speech:",parts_of_speech)
 
 def init(words):
 	# Generate the primary container that will be used
@@ -183,6 +183,7 @@ def earley_parse(words, grammar, do_state_print=False):
 	global prod_split
 	expected = (("P",grammar["P"]+dot,0))
 
+	# Create the data structure used to hold the sets
 	S = init(words)
 	# add to the set
 	S[0].append(("P",dot+grammar["P"],0))
@@ -193,6 +194,10 @@ def earley_parse(words, grammar, do_state_print=False):
 		added = True
 		if done:
 			break
+		# Since the original pseudocode on Wikipedia is a bit lacking for the
+		# original portion of the state sequence,
+		# 'bootstrap' the algorithm foward by having it only move to the next state/set
+		# when we did not add anything to 'S'
 		while added and not done:
 			added = False
 			for state in S[k].copy():
