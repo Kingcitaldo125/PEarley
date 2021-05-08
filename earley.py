@@ -8,7 +8,7 @@ prod_split = " | "
 nonterminals = set(['P', 'S', 'M', 'T'])
 
 parts_of_speech = ['+','*']
-for i in range(1,5):
+for i in range(10):
 	parts_of_speech.append(str(i))
 
 def init(words):
