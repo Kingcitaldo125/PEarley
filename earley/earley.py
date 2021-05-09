@@ -125,7 +125,7 @@ def scan(S, k, state, words, do_state_print=False):
 	# If we've either gone 'over the deep end(k is out of range)', or we're in range,
 	# but the word is not a part of speech, then we can be reasonably certain that
 	# the input is not within the language
-	if words[k] in parts_of_speech and (nxt_elem_scanner == words[k] or nxt_elem_scanner == 'number'):
+	if words[k] in parts_of_speech:
 		n_lax = swap_around_dot(state, dot)
 
 		nitem = (state[0], n_lax, state[2])
@@ -204,7 +204,7 @@ def earley_parse(words, grammar, do_state_print=False):
 				if not is_finished(state, dot):
 					nxt_elem = get_next_element(state, dot)
 					if is_nonterminal(nxt_elem): # predict
-						added = predict(S, k, nxt_elem, words, grammar, do_state_print = do_state_print)
+						added = predict(S, k, nxt_elem, words, grammar, do_state_print = False)
 					else: # scanner(terminal)
 						added = scan(S, k, state, words, do_state_print = do_state_print)
 				else: # we should be finished with a particular production
@@ -245,16 +245,8 @@ def process_grammar(grammar):
 
 
 def main():
-	pgrammar = process_grammar(load_grammar(".\\grammar.txt"))
-	
-	# TBD: Move to unit tests
+	pgrammar = process_grammar(load_grammar("..\\grammars\\grammar.txt"))
 	print(earley_parse("2+3*4", pgrammar)) # True
-	print(earley_parse("1", pgrammar)) # True
-	print(earley_parse("1+", pgrammar)) # False
-	print(earley_parse("1+2", pgrammar)) # True
-	print(earley_parse("1+2*", pgrammar)) # False
-	print(earley_parse("1+2*3", pgrammar)) # True
-	print(earley_parse("1+2*3/", pgrammar)) # False
 
 if __name__ == "__main__":
 	main()
