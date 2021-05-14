@@ -1,8 +1,9 @@
 '''earley.py'''
 
 import re
+import os
 
-dot = chr(8226)# •
+dot = chr(8226)
 prod_split = " | "
 
 nonterminals = set(['P', 'S', 'M', 'T'])
@@ -20,7 +21,7 @@ def init(words):
 
 def is_finished(state, dot):
 	global nonterminals
-	# Check to see if the '•' is at the end of a particular production
+	# Check to see if the dot is at the end of a particular production
 	cond = state[1][-1] == dot # and first_item in nonterminals
 	return cond
 
@@ -38,7 +39,7 @@ def swap_around_dot(state, dot):
 	idx = lax.index(dot)
 	x=lax[idx + 1]
 
-	# Locate the index of the '•', and swap its position in the 'lax'
+	# Locate the index of the dot, and swap its position in the 'lax'
 	# list with the position of the item that is in front of it
 	# return the string representation of the 'lax' list
 	if x not in nonterminals and x not in parts_of_speech:
@@ -67,7 +68,7 @@ def get_next_element(state, dot):
 	is_terminal = False
 
 	# Logic here is in place to know if the next element that we're trying
-	# to retrieve, relative to the '•', is either a terminal or nonterminal
+	# to retrieve, relative to the dot, is either a terminal or nonterminal
 	# symbol
 	nxt_item = state_payload[state_payload.index(dot)+1]
 
@@ -245,8 +246,9 @@ def process_grammar(grammar):
 
 
 def main():
-	pgrammar = process_grammar(load_grammar("..\\grammars\\grammar.txt"))
+	pgrammar = process_grammar(load_grammar(os.path.join("..","grammars","grammar.txt")))
 	print(earley_parse("2+3*4", pgrammar)) # True
 
 if __name__ == "__main__":
 	main()
+

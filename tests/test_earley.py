@@ -1,5 +1,6 @@
 '''test_earley.py'''
 import sys
+import os
 import pytest
 
 sys.path.insert(0, '..')
@@ -9,7 +10,7 @@ from earley.earley import load_grammar, process_grammar, earley_parse
 
 @pytest.fixture
 def grammar_raw():
-	gramm = load_grammar('..\\grammars\\grammar.txt')
+	gramm = load_grammar(os.path.join("..","grammars","grammar.txt"))
 	return gramm
 
 @pytest.fixture
@@ -85,3 +86,4 @@ def test_div_fail_2(grammar):
 	res = earley_parse("1/", grammar)
 	
 	assert res == False
+
