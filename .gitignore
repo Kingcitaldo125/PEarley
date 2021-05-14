@@ -1,2 +1,5 @@
 *__pycache__/
 *.coverage
+*__init__.pyc
+*earley.pyc
+
