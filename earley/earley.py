@@ -87,7 +87,7 @@ def state_print(S):
 	for i,ss in enumerate(S):
 		print(i,ss)
 
-def predict(S, k, element, words, grammar, do_state_print=False):
+def predict(S, k, element, grammar, do_state_print=False):
 	global dot
 	global prod_split
 
@@ -205,7 +205,7 @@ def earley_parse(words, grammar, do_state_print=False):
 				if not is_finished(state, dot):
 					nxt_elem = get_next_element(state, dot)
 					if is_nonterminal(nxt_elem): # predict
-						added = predict(S, k, nxt_elem, words, grammar, do_state_print = False)
+						added = predict(S, k, nxt_elem, grammar, do_state_print = False)
 					else: # scanner(terminal)
 						added = scan(S, k, state, words, do_state_print = do_state_print)
 				else: # we should be finished with a particular production
