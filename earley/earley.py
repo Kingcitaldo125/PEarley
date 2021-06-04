@@ -61,7 +61,6 @@ def get_next_element(state, dot):
 	state_payload = state[1]
 	dotIdx = state_payload.index(dot)
 	if dotIdx == len(state_payload)-1:
-		#print("CANNOT GET NEXT STATE ELEM")
 		return ""
 
 	nxt_elem = None
