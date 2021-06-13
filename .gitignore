@@ -2,4 +2,5 @@
 *.coverage
 *__init__.pyc
 *earley.pyc
+*.pytest_cache/
 
