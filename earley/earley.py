@@ -189,6 +189,9 @@ def earley_parse(words, grammar, do_state_print=False):
 	global prod_split
 	expected = (("P",grammar["P"]+dot,0))
 
+	if not isinstance(words, str):
+		return False
+
 	# Create the data structure used to hold the sets
 	S = init(words)
 	# add to the set
