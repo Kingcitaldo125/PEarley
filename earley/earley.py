@@ -8,9 +8,12 @@ prod_split = " | "
 
 nonterminals = set(['P', 'S', 'M', 'T'])
 
-parts_of_speech = ['+','*']
+operands = ['+','*']
+numbers = []
 for i in range(10):
-	parts_of_speech.append(str(i))
+	numbers.append(str(i))
+
+parts_of_speech = operands + numbers
 
 def init(words):
 	# Generate the primary container that will be used
@@ -114,12 +117,17 @@ def predict(S, k, element, grammar, do_state_print=False):
 def scan(S, k, state, words, do_state_print=False):
 	global dot
 	global parts_of_speech
-
-	nxt_elem_scanner = get_next_element(state, dot)
+	global numbers
 
 	added = False
 	if k > len(words)-1:
 		return added
+
+	nxt_elem_scanner = get_next_element(state, dot)
+
+	# Solve issue where we're trying to compare a number terminal with an operand terminal
+	if nxt_elem_scanner == "number" and words[k] not in numbers:
+		return False
 
 	# Check to see if the terminal symbol is a member of the language
 	# If we've either gone 'over the deep end(k is out of range)', or we're in range,
@@ -246,7 +254,7 @@ def process_grammar(grammar):
 
 def main():
 	pgrammar = process_grammar(load_grammar(os.path.join("..","grammars","grammar.txt")))
-	print(earley_parse("2+3*4", pgrammar)) # True
+	print("2+3*4","=",earley_parse("2+3*4", pgrammar)) # True
 
 if __name__ == "__main__":
 	main()
