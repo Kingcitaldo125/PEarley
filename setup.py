@@ -6,7 +6,7 @@ VERSION = '0.1.0'
 DESCRIPTION = 'Basic Python Earley Parser'
 AUTHOR = 'Paul Arelt'
 EMAIL = 'your@email.com'
-URL = 'https://github.com/your_username/your_package_repo'
+URL = 'https://github.com/Kingcitaldo125/PEarley/tree/master'
 LICENSE = 'Apache'
 
 REQUIRES = [
